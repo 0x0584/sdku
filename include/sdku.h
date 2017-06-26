@@ -17,9 +17,9 @@ struct _SUDOKU_PUZZLE_STRUCT {
   struct _SUDOKU_BLOCK_STRUCT {
 	/* represents an individual cell */
 	struct _SUDOKU_CELL_STRUCT {
+	  cell_t *row,				/* row of this cell */
+		*column;				/* column of this cell */
 	  int value;				/* value of the cell */
-	  row_t row;				/* row of this cell */
-	  clmn_t column;			/* column of this cell */
 	} **grid;					/* block of cells (3x3) */
   } **block;					/* puzzle of blocks (3x3) */
 };

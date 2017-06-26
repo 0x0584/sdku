@@ -2,7 +2,6 @@
 
 int printsdku(sdku_t *sdku, int ydim, int xdim)
 {
-
   if(!sdku) goto FAILURE;
   
   /* This is O(scary), but seems quick enough in practice.
@@ -101,6 +100,23 @@ void shuffvalues(int *v, int size)
   }
 }
 
+bool isin(cell_t *cells, cell_t *this)
+{
+  for(int i = 0; i < X_DIM; ++i) 
+	if(cells[i].value == this->value)
+	  return true;
+  return false;
+}
+
+bool isinblock(block_t *blck, cell_t *c)
+{
+  for(int j = 0; j < Y_DIM/3; ++j)
+	for(int i = 0; i < X_DIM/3; ++i)
+	  if(blck->grid[j][i].value == c->value)
+		return true;
+  return false;
+}
+
 sdku_t * gensdku(sdku_t *sdku, int ydim, int xdim)
 {
   /* key-idea: take a number from the `value` array and store
@@ -143,23 +159,14 @@ sdku_t * gensdku(sdku_t *sdku, int ydim, int xdim)
    * store it in foo-variable. repeat the whole treatment;
    * recursively. until all the array is filled.
    */
+
   int values[9] = {
 	1, 2, 3,
 	4, 5, 6,
 	7, 8, 9
   };
 
-  for(int i = 0; i < 9; ++i){
-	shuffvalues(values, 9);
 
-	for(int j = 0; j < 9; ++j){
-	  printf("%d ", values[j]);
-	}
-	putchar('\n');
-  }
-  
-  /* free(values); */
-  
   return sdku;
 }
 
