@@ -4,14 +4,15 @@ int printsdku(sdku_t *sdku, int ydim, int xdim)
 {
 
   if(!sdku) goto FAILURE;
-
-  /* for each block */
+  
+  /* This is O(scary), but seems quick enough in practice.
+   * for each block */
   for(int j = 0; j < ydim/3; ++j) {
 	for(int i = 0; i < xdim/3; ++i) {
 	  /* for each cell in the block */
 	  for(int jj = 0; jj < ydim/3; ++jj) {
 		for(int ii = 0; ii < xdim/3; ++ii) {
-		  printf(" %d |", sdku->block[j][i].grid[jj][ii].value);
+		  printf(" %d ", sdku->block[j][i].grid[jj][ii].value);
 		}
 		putchar('\t');
 	  }
@@ -22,7 +23,7 @@ int printsdku(sdku_t *sdku, int ydim, int xdim)
 
   return 0;
 
-  FAILURE: return -1;
+ FAILURE: return -1;
 }
 
 cell_t ** initgrid(int ygrid, int xgrid)
@@ -74,20 +75,22 @@ sdku_t * initsdku(int ysdku, int xsdku)
 void shuffvalues(int *v, int size)
 {
   bool used[size];
-  int index0, index1;
-
+  int index0, index1, seed = rand();
+  
   for(int i = 0; i < size; ++i) used[i] = false;
 
-  if(size%2) index0 = index1 = rand()%size;
-  else index0 = 0, index1 = (size-1);
+  if(size%2) srand(++seed), index0 = index1 = rand()%size;
+  else index0 = 0, index1 = (size - 1);
 
   for(int i = 0; i < 9; ++i) {
 	while(used[index0] || used[index1]) {
 	BEGINNIG:
-	  if(!used[index0]) index0 = rand()%9;
-	  if(!used[index1]) index1 = rand()%9;
+	  index0 = rand()%9;
+	  srand(++seed);
+	  index1 = rand()%9;
 	  
 	  if(index0 == index1) goto BEGINNIG;
+	  else break;
 	}
 	
 	used[index0] = used[index1] = true;
