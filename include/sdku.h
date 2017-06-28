@@ -11,14 +11,17 @@
 
 #include <time.h>
 
-/* represents an puzzle of blocks; the Sudoku puzzle */
+/* represents a puzzle of blocks; the Sudoku puzzle */
 struct _SUDOKU_PUZZLE_STRUCT {
   /* represents an individual block of cells */
   struct _SUDOKU_BLOCK_STRUCT {
 	/* represents an individual cell */
 	struct _SUDOKU_CELL_STRUCT {
-	  cell_t *row,				/* row of this cell */
-		*column;				/* column of this cell */
+	  /* represents an individual row or column */
+	  struct _LINKED_LIST_STRUCT {
+		cell_t *cell;			/* current cell in row/column */
+		node_t *next;			/* next cell in row/column */
+	  } *row, *column; 
 	  int value;				/* value of the cell */
 	} **grid;					/* block of cells (3x3) */
   } **block;					/* puzzle of blocks (3x3) */
@@ -30,19 +33,7 @@ struct _SUDOKU_PUZZLE_STRUCT {
 int printsdku(sdku_t *__sdku, int __ydim, int __xdim);
 #define putsdku(s) printsdku(s, Y_DIM, X_DIM)
 
-/* this function takes two arguments; which represents the 
- * `__ydim` and `__xdim` dimensions of the Sudoku puzzle.
- *
- * the puzzle is represented with a 2-dim-array, so this 
- * function allocates and returns an `int **`. */
-sdku_t * initsdku(int __ysdku_dim, int __xsdku_dim);
-
 /* this function generates a Sudoku */
 sdku_t * gensdku(sdku_t * __sdku, int __ydim, int __xdim);
-
-/* this function takes three arguments; the `__sdku` puzzle
- * and its dimesions `__ydim` and `__xdim`. 
- * it frees (dis-allocate) `__sdku` from the memory */
-int freesdku(sdku_t * __sdku, int __ydim, int __xdim);
 
 #endif	/* _SDKU_H */

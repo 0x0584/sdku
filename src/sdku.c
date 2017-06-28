@@ -3,7 +3,7 @@
 int printsdku(sdku_t *sdku, int ydim, int xdim)
 {
   if(!sdku) goto FAILURE;
-  
+
   /* This is O(scary), but seems quick enough in practice.
    * for each block */
   for(int j = 0; j < ydim/3; ++j) {
@@ -25,57 +25,13 @@ int printsdku(sdku_t *sdku, int ydim, int xdim)
  FAILURE: return -1;
 }
 
-cell_t ** initgrid(int ygrid, int xgrid)
-{
-  cell_t **foocell = NULL;
-
-  foocell = (cell_t **) malloc(ygrid * sizeof(cell_t *));
-
-  for(int j = 0; j < ygrid; ++j) {
-	foocell[j] = (cell_t *) malloc(xgrid * sizeof(cell_t));
-	for(int i = 0; i < xgrid; ++i) {
-	  foocell[j][i].value = -1;
-	  /* foocell[j][i].row = &(foocell[j][0]); */
-	  /* foocell[j][i].column = foocell[j]; */
-	}
-  }
-
-  return foocell;
-}
-
-block_t ** initblock(int yblock, int xblock)
-{
-  block_t **fooblock = NULL;
-
-  fooblock = (block_t **) malloc(yblock * sizeof(block_t *));
-
-  for(int j = 0; j < yblock; ++j) {
-	fooblock[j] = (block_t *) malloc(xblock * sizeof(block_t));
-	for(int i = 0; i < xblock; ++i)
-	  fooblock[j][i].grid = initgrid(yblock, xblock);
-  }
-  
-  return fooblock;
-}
-
-sdku_t * initsdku(int ysdku, int xsdku)
-{
-  sdku_t *foosdku = NULL;
-
-  int xb = xsdku/3, yb = ysdku/3;  
-     
-  foosdku = (sdku_t *) malloc(sizeof(sdku_t));
-
-  foosdku->block = initblock(xb, yb); /* the block is 3x3 */
-  
-  return gensdku(foosdku, ysdku, xsdku);
-}
-
 void shuffvalues(int *v, int size)
 {
   bool used[size];
-  int index0, index1, seed = rand();
-  
+  int index0, index1,
+	seed = rand();			/* a trick to update the seed
+							 * within the function */
+
   for(int i = 0; i < size; ++i) used[i] = false;
 
   if(size%2) srand(++seed), index0 = index1 = rand()%size;
@@ -87,28 +43,34 @@ void shuffvalues(int *v, int size)
 	  index0 = rand()%9;
 	  srand(++seed);
 	  index1 = rand()%9;
-	  
+
 	  if(index0 == index1) goto BEGINNIG;
 	  else break;
 	}
-	
-	used[index0] = used[index1] = true;
 
-	int tmp = v[index0];
-	v[index0] = v[index1];
-	v[index1] = tmp; 
+	used[index0] = used[index1] = true; /* check as used */
+
+	int tmp;
+	tmp = v[index0]; v[index0] = v[index1]; v[index1] = tmp;
   }
 }
 
-bool isin(cell_t *cells, cell_t *this)
+bool isinlist(node_t *head, const cell_t *this)
 {
-  for(int i = 0; i < X_DIM; ++i) 
-	if(cells[i].value == this->value)
-	  return true;
+  node_t *foohead = head;
+
+  while(true) {
+	int value = foohead->cell->value;
+
+	if(value == this->value) return true;
+	else if(!(foohead->next)) break; /* we reach the end of the list */
+	else foohead = foohead->next;	 /* move to the next element */
+  }
+
   return false;
 }
 
-bool isinblock(block_t *blck, cell_t *c)
+bool isinblock(const block_t *blck, cell_t *c)
 {
   for(int j = 0; j < Y_DIM/3; ++j)
 	for(int i = 0; i < X_DIM/3; ++i)
@@ -168,21 +130,4 @@ sdku_t * gensdku(sdku_t *sdku, int ydim, int xdim)
 
 
   return sdku;
-}
-
-int freesdku(sdku_t *sdku, int ydim, int xdim)
-{
-  for(int j = 0; j < ydim/3; ++j) {
-	for(int i = 0; i < xdim/3; ++i) {
-	  for(int jj = 0; jj < ydim/3; ++jj) {
-		free(sdku->block[j][i].grid[jj]);
-	  }
-	}
-	free(sdku->block[j]);
-  }
-  
-  free(sdku->block);
-  free(sdku);
-  
-  return 0;
 }
