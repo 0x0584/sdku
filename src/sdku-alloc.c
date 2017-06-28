@@ -43,32 +43,37 @@ sdku_t * initsdku(int ydim, int xdim)
    *       +---+---+---+   +---+---+---+   +---+---+---+
    */
 
-  node_t *row = (node_t *) malloc(Y_DIM * sizeof(node_t)),
-  	*col = (node_t *) malloc(X_DIM * sizeof(node_t));
+  /* node_t *row = (node_t *) malloc(Y_DIM * sizeof(node_t)), */
+  /* 	*col = (node_t *) malloc(X_DIM * sizeof(node_t)); */
   
   /* loop over blocks */
-  for(int j = 0; j < yb; ++j) 
+  for(int j = 0; j < yb; ++j) {
 	for(int i = 0; i < xb; ++i) {
 	  /* loop over cells in a block */
 	  for(int jj = 0; jj < yb; ++jj) {
 		for(int ii = 0; ii < xb; ++ii) {
 		  cell_t *c = &(foosdku->block[j][i].grid[jj][ii]);
 		  /* + append the current cell to the corresponding
-		   *   row-or-column list pR, pC. then set the cell's 
-		   *   row-and-column pointers (pR, pC) */
-		  c->row = appendto(&(row[getindex(j, i)]), c);
-		  c->column = appendto(&(col[getindex(jj, ii)]), c);
+		   *   row-or-column list: row, col. then set the 
+		   *   cell's row-and-column arrays (row, col) */
+		  /* c->row = appendto(&(row[getindex(j, i)]), c); */
+		  /* c->column = appendto(&(col[getindex(jj, ii)]), c); */
+		  printf("%d ", getindex(j, i));
+		  /* getchar(); */
 	    }
 		putchar('\t');
 	  }
 	  putchar('\n');
 	}
+	putchar('\n');
+  }
   return foosdku;
 }
 
-
+int foo;
 cell_t ** initgrid(int ygrid, int xgrid)
 {
+  
   cell_t **foocell = NULL;
 
   foocell = (cell_t **) malloc(ygrid * sizeof(cell_t *));
@@ -76,7 +81,7 @@ cell_t ** initgrid(int ygrid, int xgrid)
   for(int j = 0; j < ygrid; ++j) {
 	foocell[j] = (cell_t *) malloc(xgrid * sizeof(cell_t));
 	for(int i = 0; i < xgrid; ++i) {
-	  foocell[j][i].value = -1;
+	  foocell[j][i].value = foo++;
 	  foocell[j][i].row = NULL;
 	  foocell[j][i].column = NULL;
 	}
@@ -122,8 +127,6 @@ node_t * appendto(node_t *head, cell_t *cell)
 
 int getindex(int y, int x)
 {
-  /* because of the Sudoku has 9*9 cells (or 3*3 blocks)
-   * this hack works! i don't know how it really works! */
   for(int i = y, index = 0;
 	  i >= 0;
 	  i -= 1, index += 3)
