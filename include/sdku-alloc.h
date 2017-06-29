@@ -6,18 +6,7 @@ block_t ** initblock(int __blck_ydim, int __blck_xdim);
 cell_t ** initgrid(int __grid_ydim, int __grid_xdim);
 node_t * appendto(node_t *__head, cell_t *__cell);
 
-/* IDEA: this hack works because the Sudoku has 3*3 blocks
- *		 each block has 3*3 cells. when tracking block's 
- *		 coordinates we actually track the row. when we
- *		 when we track the 
- *
- *
- * RET:	 I: when passing the (Y, X) of a block, it returns
- *		    the index of the row of that cell 
- *		II: when passing the (Y', X') of a cell, it returns 
- *			the index of the column of that cell
- */
-/*					j			  i     */
+/* NO THIS SHIT IS NOT WORKING AS EXPECTED SHIT!*/
 int getindex(int __yindex, int __xindex);
 
 /* this function takes two arguments; which represents the 

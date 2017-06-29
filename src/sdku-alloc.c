@@ -47,26 +47,26 @@ sdku_t * initsdku(int ydim, int xdim)
   /* 	*col = (node_t *) malloc(X_DIM * sizeof(node_t)); */
   
   /* loop over blocks */
-  for(int j = 0; j < yb; ++j) {
-	for(int i = 0; i < xb; ++i) {
-	  /* loop over cells in a block */
-	  for(int jj = 0; jj < yb; ++jj) {
-		for(int ii = 0; ii < xb; ++ii) {
-		  cell_t *c = &(foosdku->block[j][i].grid[jj][ii]);
-		  /* + append the current cell to the corresponding
-		   *   row-or-column list: row, col. then set the 
-		   *   cell's row-and-column arrays (row, col) */
-		  /* c->row = appendto(&(row[getindex(j, i)]), c); */
-		  /* c->column = appendto(&(col[getindex(jj, ii)]), c); */
-		  printf("%d ", getindex(j, i));
-		  /* getchar(); */
-	    }
-		putchar('\t');
-	  }
-	  putchar('\n');
-	}
-	putchar('\n');
-  }
+  /* for(int j = 0; j < yb; ++j) { */
+  /* 	for(int i = 0; i < xb; ++i) { */
+  /* 	  /\* loop over cells in a block *\/ */
+  /* 	  for(int jj = 0; jj < yb; ++jj) { */
+  /* 		for(int ii = 0; ii < xb; ++ii) { */
+  /* 		  cell_t *c = &(foosdku->block[j][i].grid[jj][ii]); */
+  /* 		  /\* + append the current cell to the corresponding */
+  /* 		   *   row-or-column list: row, col. then set the  */
+  /* 		   *   cell's row-and-column arrays (row, col) *\/ */
+  /* 		  /\* c->row = appendto(&(row[getindex(j, i)]), c); *\/ */
+  /* 		  /\* c->column = appendto(&(col[getindex(jj, ii)]), c); *\/ */
+  /* 		  printf("%d ", getindex(j, i)); */
+  /* 		  /\* getchar(); *\/ */
+  /* 	    } */
+  /* 		putchar('\t'); */
+  /* 	  } */
+  /* 	  putchar('\n'); */
+  /* 	} */
+  /* 	putchar('\n'); */
+  /* } */
   return foosdku;
 }
 

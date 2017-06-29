@@ -3,7 +3,7 @@
 
 CC = gcc
 CFLAGS = -ggdb -Wall -Wextra #-Wpadded -O2
-LDFLAGS = -I.
+LDFLAGS = -I. -lncurses
 
 EXEC = sdku-gen
 ARGS = #
