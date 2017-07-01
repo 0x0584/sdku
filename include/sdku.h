@@ -36,4 +36,5 @@ int printsdku(sdku_t *__sdku, int __ydim, int __xdim);
 /* this function generates a Sudoku */
 sdku_t * gensdku(sdku_t * __sdku, int __ydim, int __xdim);
 
+extern int MAX_ROWS, MAX_COLUMNS;
 #endif	/* _SDKU_H */

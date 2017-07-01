@@ -7,12 +7,21 @@
 #include "../include/sdku.h"
 #include "../include/sdku-alloc.h"
 
+int MAX_ROWS = 0, MAX_COLUMNS = 0;
+
 int main()
 {
   srand(time(NULL));
 
   initscr();
 
+  getmaxyx(stdscr,MAX_ROWS, MAX_COLUMNS);
+
+  if(MAX_ROWS < 30 || MAX_COLUMNS < 75) {
+	endwin();
+	return 1;
+  }
+  
   sdku_t *s = initsdku(Y_DIM, X_DIM);
 
   putsdku(s);

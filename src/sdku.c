@@ -6,26 +6,19 @@ int printsdku(sdku_t *sdku, int ydim, int xdim)
 
   /* This is O(scary), but seems quick enough in practice.
    * for each block */
-  int maxrow = 0, maxcol = 0;
-  getmaxyx(stdscr, maxrow, maxcol);
-  for(int j = 0; j < ydim/3; ++j) {
-	for(int i = 0; i < xdim/3; ++i) {
+  for(int j = 0; j < ydim/3; ++j)
+	for(int i = 0; i < xdim/3; ++i)
 	  /* for each cell in the block */
-	  for(int jj = 0; jj < ydim/3; ++jj) {
+	  for(int jj = 0; jj < ydim/3; ++jj)
 		for(int ii = 0; ii < xdim/3; ++ii) {
-		  int value = sdku->block[j][i].grid[jj][ii].value; 
-		  mvprintw(maxrow/3 + (jj*5 + j*5), maxcol/3 + (ii*5 + i*5), "%d", value);
-		  /* printw("%d ", value); */
-		}
-		getch();
-		/* mvprintw(i, jj,"%c",'\n'); */
-	  }
-	  //printf("\033[%d;%dH", j*10, i*10);
-	  /* mvprintw(i, j, "%c",'\n'); */
-	}
-	/* mvprintw(j, j, "%c",'\n'); */
-  }
+		  /* don't miss with those! until i comment them! */
+		  int y = (MAX_ROWS/Y_DIM) + (jj*2 + j*4*2);
+		  int x = (MAX_COLUMNS/X_DIM) + (ii*3 + i*4*3);
+		  int value = sdku->block[j][i].grid[jj][ii].value;
 
+		  mvprintw(y, x, "%2d", value);
+		}
+  
   return 0;
 
  FAILURE: return -1;
