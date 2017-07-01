@@ -17,7 +17,7 @@ int main()
 
   getmaxyx(stdscr,MAX_ROWS, MAX_COLUMNS);
 
-  if(MAX_ROWS < 30 || MAX_COLUMNS < 75) {
+  if(MAX_ROWS < 28 || MAX_COLUMNS < 75) {
 	endwin();
 	return 1;
   }

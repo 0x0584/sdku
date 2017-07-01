@@ -1,24 +1,44 @@
 #include "../include/sdku.h"
+#include <string.h>
 
 int printsdku(sdku_t *sdku, int ydim, int xdim)
 {
   if(!sdku) goto FAILURE;
 
+  start_color();
+  
+  init_pair(1, COLOR_BLACK, COLOR_YELLOW);
+  init_pair(2, COLOR_WHITE, COLOR_RED);
+
+  attron(COLOR_PAIR(1));
+	
+  mvprintw((MAX_ROWS/2) + 5, MAX_COLUMNS - (MAX_COLUMNS/3), "SUDOKU GENERATOR");
+  mvprintw((MAX_ROWS/2) + 6, MAX_COLUMNS - (MAX_COLUMNS/3) + strlen("SUDOKU")-1, "0x0584");
+  
+  attroff(COLOR_PAIR(1));
+
+  attron(COLOR_PAIR(2));
+  refresh();
+
   /* This is O(scary), but seems quick enough in practice.
    * for each block */
   for(int j = 0; j < ydim/3; ++j)
-	for(int i = 0; i < xdim/3; ++i)
+	for(int i = 0; i < xdim/3; ++i) 
 	  /* for each cell in the block */
 	  for(int jj = 0; jj < ydim/3; ++jj)
 		for(int ii = 0; ii < xdim/3; ++ii) {
 		  /* don't miss with those! until i comment them! */
-		  int y = (MAX_ROWS/Y_DIM) + (jj*2 + j*4*2);
-		  int x = (MAX_COLUMNS/X_DIM) + (ii*3 + i*4*3);
+		  const int spc_yg = 2, spc_xg = 4,
+			spc_yb = (4 * spc_yg) - 1,
+			spc_xb = (4 * spc_xg) - 1;
+		  
+		  int y = (MAX_ROWS/Y_DIM) + (jj*spc_yg + j*spc_yb) + 2;
+		  int x = (MAX_COLUMNS/X_DIM) + (ii*spc_xg + i*spc_xb);
 		  int value = sdku->block[j][i].grid[jj][ii].value;
 
-		  mvprintw(y, x, "%2d", value);
+		  mvprintw(y, x, "%2d ", value);
 		}
-  
+  attroff(COLOR_PAIR(2));
   return 0;
 
  FAILURE: return -1;
