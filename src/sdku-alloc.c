@@ -3,6 +3,10 @@
 
 sdku_t * initsdku(int ydim, int xdim)
 {  
+  int getindex(int b_index, int g_index) {    
+	return 3*b_index + g_index;
+  }
+
   sdku_t *foosdku = NULL;
 
   int xb = xdim/3, yb = ydim/3;
@@ -45,6 +49,25 @@ sdku_t * initsdku(int ydim, int xdim)
 
   /* node_t *row = (node_t *) malloc(Y_DIM * sizeof(node_t)), */
   /* 	*col = (node_t *) malloc(X_DIM * sizeof(node_t)); */
+
+   for(int j = 0; j < ydim/3; ++j)
+	for(int i = 0; i < xdim/3; ++i) 
+	  /* for each cell in the block */
+	  for(int jj = 0; jj < ydim/3; ++jj)
+		for(int ii = 0; ii < xdim/3; ++ii) {
+		  /* don't miss with those! until i comment them! */
+		  const int spc_yg = 2, spc_xg = 4,
+			spc_yb = (4 * spc_yg) - 1,
+			spc_xb = (4 * spc_xg) - 1;
+		  
+		  int y = (MAX_ROWS/Y_DIM) + (jj*spc_yg + j*spc_yb) + 2;
+		  int x = (MAX_COLUMNS/X_DIM) + (ii*spc_xg + i*spc_xb);
+		  int value = getindex(i, ii);
+
+		  mvprintw(y, x, "%2d ", value);
+		}
+
+  getch();
   
   return foosdku;
 }
@@ -52,7 +75,6 @@ sdku_t * initsdku(int ydim, int xdim)
 int foo;
 cell_t ** initgrid(int ygrid, int xgrid)
 {
-  
   cell_t **foocell = NULL;
 
   foocell = (cell_t **) malloc(ygrid * sizeof(cell_t *));
@@ -72,13 +94,14 @@ cell_t ** initgrid(int ygrid, int xgrid)
 block_t ** initblock(int yblock, int xblock)
 {
   block_t **fooblock = NULL;
+  int yg = yblock, xg = xblock;
 
   fooblock = (block_t **) malloc(yblock * sizeof(block_t *));
 
   for(int j = 0; j < yblock; ++j) {
 	fooblock[j] = (block_t *) malloc(xblock * sizeof(block_t));
 	for(int i = 0; i < xblock; ++i)
-	  fooblock[j][i].grid = initgrid(yblock, xblock);
+	  fooblock[j][i].grid = initgrid(yg, xg);
   }
 
   return fooblock;
@@ -102,14 +125,6 @@ node_t * appendto(node_t *head, cell_t *cell)
   }
   
   return head;
-}
-
-int getindex(int y, int x)
-{
-  for(int i = y, index = 0;
-	  i >= 0;
-	  i -= 1, index += 3)
-	if(i == 0) return index + x;
 }
 
 

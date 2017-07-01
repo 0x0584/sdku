@@ -6,9 +6,6 @@ block_t ** initblock(int __blck_ydim, int __blck_xdim);
 cell_t ** initgrid(int __grid_ydim, int __grid_xdim);
 node_t * appendto(node_t *__head, cell_t *__cell);
 
-/* NO THIS SHIT IS NOT WORKING AS EXPECTED SHIT!*/
-int getindex(int __yindex, int __xindex);
-
 /* this function takes two arguments; which represents the 
  * `__ydim` and `__xdim` dimensions of the Sudoku puzzle.
  *
