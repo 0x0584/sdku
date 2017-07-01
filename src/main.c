@@ -22,7 +22,7 @@ int main()
 	return 1;
   }
   
-  sdku_t *s = initsdku(Y_DIM, X_DIM);
+  sdku_t *s = gensdku(Y_DIM, X_DIM);
 
   putsdku(s);
 

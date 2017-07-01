@@ -3,11 +3,14 @@
 
 #define Y_DIM 9
 #define X_DIM Y_DIM
+#define FRESH_CELL (1<<4)
 
 #include "types.h"
 
 #include <ncurses.h>
 #include <stdlib.h>
+
+#include <string.h>
 
 #include <time.h>
 
@@ -34,7 +37,7 @@ int printsdku(sdku_t *__sdku, int __ydim, int __xdim);
 #define putsdku(s) printsdku(s, Y_DIM, X_DIM)
 
 /* this function generates a Sudoku */
-sdku_t * gensdku(sdku_t * __sdku, int __ydim, int __xdim);
+sdku_t * gensdku(int __ydim, int __xdim);
 
 extern int MAX_ROWS, MAX_COLUMNS;
 #endif	/* _SDKU_H */

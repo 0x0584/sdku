@@ -1,23 +1,24 @@
 #include "../include/sdku.h"
-#include <string.h>
+#include "../include/sdku-alloc.h"
+
 
 int printsdku(sdku_t *sdku, int ydim, int xdim)
 {
   if(!sdku) goto FAILURE;
 
-  start_color();
+  int y = (MAX_ROWS/2) + 5, x = MAX_COLUMNS - (MAX_COLUMNS/3);
   
+  start_color();
   init_pair(1, COLOR_BLACK, COLOR_YELLOW);
   init_pair(2, COLOR_WHITE, COLOR_RED);
-
   attron(COLOR_PAIR(1));
-	
-  mvprintw((MAX_ROWS/2) + 5, MAX_COLUMNS - (MAX_COLUMNS/3), "SUDOKU GENERATOR");
-  mvprintw((MAX_ROWS/2) + 6, MAX_COLUMNS - (MAX_COLUMNS/3) + strlen("SUDOKU")-1, "0x0584");
+
+  mvprintw(y, x, "[SUDOKU GENERATOR]");
+  mvprintw(++y, x + strlen("SUDOKU")-1, "[0x0584]");
   
   attroff(COLOR_PAIR(1));
-
   attron(COLOR_PAIR(2));
+
   refresh();
 
   /* This is O(scary), but seems quick enough in practice.
@@ -38,12 +39,15 @@ int printsdku(sdku_t *sdku, int ydim, int xdim)
 
 		  mvprintw(y, x, "%2d ", value);
 		}
+  
   attroff(COLOR_PAIR(2));
+
   return 0;
 
  FAILURE: return -1;
 }
 
+#define shuffle(val) shuffvalues(val, sizeof(val)/sizeof(int))
 void shuffvalues(int *v, int size)
 {
   bool used[size];
@@ -74,14 +78,14 @@ void shuffvalues(int *v, int size)
   }
 }
 
-bool isinlist(node_t *head, const cell_t *this)
+bool isinlist(const node_t *head, const int this)
 {
-  node_t *foohead = head;
+  node_t *foohead = (node_t*) head;
 
   while(true) {
 	int value = foohead->cell->value;
 
-	if(value == this->value) return true;
+	if(value == this) return true;
 	else if(!(foohead->next)) break; /* we reach the end of the list */
 	else foohead = foohead->next;	 /* move to the next element */
   }
@@ -89,16 +93,16 @@ bool isinlist(node_t *head, const cell_t *this)
   return false;
 }
 
-bool isinblock(const block_t *blck, cell_t *c)
+bool isinblock(const block_t *blck, const int this)
 {
   for(int j = 0; j < Y_DIM/3; ++j)
 	for(int i = 0; i < X_DIM/3; ++i)
-	  if(blck->grid[j][i].value == c->value)
+	  if(blck->grid[j][i].value == this)
 		return true;
   return false;
 }
 
-sdku_t * gensdku(sdku_t *sdku, int ydim, int xdim)
+sdku_t * gensdku(int ydim, int xdim)
 {
   /* key-idea: take a number from the `value` array and store
    * it in a foo-variable. take the next unvisited-cell
@@ -140,6 +144,7 @@ sdku_t * gensdku(sdku_t *sdku, int ydim, int xdim)
    * store it in foo-variable. repeat the whole treatment;
    * recursively. until all the array is filled.
    */
+  sdku_t *sdku = initsdku(ydim, xdim);
 
   int values[9] = {
 	1, 2, 3,
@@ -147,6 +152,44 @@ sdku_t * gensdku(sdku_t *sdku, int ydim, int xdim)
 	7, 8, 9
   };
 
+  node_t *c = sdku->block[0][0].grid[0][0].row;
+
+  while(c->next) {
+	printw("ccc %d ", c->cell->value);
+	c = c->next;
+  }
+  getch();
+	
+  for(int j = 0; j < Y_DIM/3; ++j) {
+  	for(int i = 0; i < X_DIM/3; ++i) {
+  	  block_t *b = &(sdku->block[j][i]);
+  	  for(int jj = 0; jj < Y_DIM/3; ++jj) {
+  		for(int ii = 0; ii < X_DIM/3; ++ii) {
+  		  cell_t *c = &(b->grid[jj][ii]);
+  		  /* i don't know whether the lower if-statment
+  		   * is required or not but i'll keep it for the
+  		   * moment; until i test it */
+  		  if(c->value == FRESH_CELL) {
+  			int index = 0, value;
+  			bool isvalid = true;
+  		  RETRY:
+  			value = values[index];
+
+  			isvalid &= !(isinblock(b, value));
+  			isvalid &= !(isinlist(c->row, value));
+  			isvalid &= !(isinlist(c->column, value));
+			
+  			if(isvalid) c->value = value, shuffle(values);
+  			else if(index < 9) { ++index; goto RETRY; }
+  			else {
+  			  printw("FUCK YOU! %d", index);
+  			  getch();
+  			}
+  		  }
+  		}
+  	  }
+  	}
+  }
 
   return sdku;
 }

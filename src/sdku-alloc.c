@@ -47,27 +47,24 @@ sdku_t * initsdku(int ydim, int xdim)
    *       +---+---+---+   +---+---+---+   +---+---+---+
    */
 
-  /* node_t *row = (node_t *) malloc(Y_DIM * sizeof(node_t)), */
-  /* 	*col = (node_t *) malloc(X_DIM * sizeof(node_t)); */
+  node_t **row = (node_t **) malloc(Y_DIM * sizeof(node_t *)),
+  	**col = (node_t **) malloc(X_DIM * sizeof(node_t *));
 
-   for(int j = 0; j < ydim/3; ++j)
-	for(int i = 0; i < xdim/3; ++i) 
+  for(int i = 0; i < Y_DIM; ++i)
+	row[i] = col[i] = NULL;
+  
+  /* for each block */
+  for(int j = 0; j < yb; ++j)
+	for(int i = 0; i < xb; ++i){
+	  block_t *b = &(foosdku->block[j][i]);
 	  /* for each cell in the block */
-	  for(int jj = 0; jj < ydim/3; ++jj)
-		for(int ii = 0; ii < xdim/3; ++ii) {
-		  /* don't miss with those! until i comment them! */
-		  const int spc_yg = 2, spc_xg = 4,
-			spc_yb = (4 * spc_yg) - 1,
-			spc_xb = (4 * spc_xg) - 1;
-		  
-		  int y = (MAX_ROWS/Y_DIM) + (jj*spc_yg + j*spc_yb) + 2;
-		  int x = (MAX_COLUMNS/X_DIM) + (ii*spc_xg + i*spc_xb);
-		  int value = getindex(i, ii);
-
-		  mvprintw(y, x, "%2d ", value);
+	  for(int jj = 0; jj < yb; ++jj)
+		for(int ii = 0; ii < xb; ++ii) {
+		  cell_t *c = &(b->grid[jj][ii]);
+		  c->row = appendto(row[getindex(j,jj)],c);
+		  c->column = appendto(col[getindex(i,ii)],c);
 		}
-
-  getch();
+	}
   
   return foosdku;
 }
@@ -82,7 +79,7 @@ cell_t ** initgrid(int ygrid, int xgrid)
   for(int j = 0; j < ygrid; ++j) {
 	foocell[j] = (cell_t *) malloc(xgrid * sizeof(cell_t));
 	for(int i = 0; i < xgrid; ++i) {
-	  foocell[j][i].value = foo++;
+	  foocell[j][i].value = FRESH_CELL;
 	  foocell[j][i].row = NULL;
 	  foocell[j][i].column = NULL;
 	}
@@ -109,21 +106,26 @@ block_t ** initblock(int yblock, int xblock)
 
 node_t * appendto(node_t *head, cell_t *cell)
 {
+
+  /* no head is found */
+  if(!(head)) {
+	head = (node_t *) malloc(sizeof(node_t));
+	head->cell = cell, head->next = NULL;
+	goto RET;
+  }
+
   /* key-idea: append the cell to the last node
    *		   in the head */
 
   node_t *foo = head;
 
-  /* no head is found */
-  if(!(foo)) foo->cell = cell, foo->next = NULL;
-  else /* head exists! */ {
-	/* move to the end of the list */
-	while(foo->next) foo = foo->next;
-	/* append the new node */
-	foo->cell = cell;
-	foo->next = NULL;
-  }
+  /* move to the end of the list */
+  while(foo->next) foo = foo->next;
+  /* append the new node */
+  foo->cell = cell;
+  foo->next = NULL;
   
+ RET:
   return head;
 }
 
