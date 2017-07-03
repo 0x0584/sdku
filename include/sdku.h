@@ -3,7 +3,11 @@
 
 #define Y_DIM 9
 #define X_DIM Y_DIM
-#define FRESH_CELL (1<<4)
+
+#define FRESH_CELL (-1)
+
+#define MIN_SCR_Y 27
+#define MIN_SCR_X 56
 
 #include "types.h"
 

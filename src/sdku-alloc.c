@@ -17,7 +17,7 @@ sdku_t * initsdku(int ydim, int xdim)
 
   /* here! */
   /* key-idea: loop over blocks and their cells
-  * then for each block, */
+   * then for each block, */
 
   /*
    *   j\i   0   1   2       3   4   5       6   7   8
@@ -50,17 +50,26 @@ sdku_t * initsdku(int ydim, int xdim)
   node_t **row = (node_t **) malloc(Y_DIM * sizeof(node_t *)),
   	**col = (node_t **) malloc(X_DIM * sizeof(node_t *));
 
-  for(int i = 0; i < Y_DIM; ++i)
-	row[i] = col[i] = NULL;
+  for(int i = 0; i < Y_DIM; ++i) {
+	row[i] = (node_t *) malloc(sizeof(node_t));
+	col[i] = (node_t *) malloc(sizeof(node_t));
+	
+	row[i]->cell = NULL;
+	row[i]->next = NULL;
+	col[i]->cell = NULL;
+	col[i]->next = NULL;
+  }
   
   /* for each block */
   for(int j = 0; j < yb; ++j)
 	for(int i = 0; i < xb; ++i){
 	  block_t *b = &(foosdku->block[j][i]);
+
 	  /* for each cell in the block */
 	  for(int jj = 0; jj < yb; ++jj)
 		for(int ii = 0; ii < xb; ++ii) {
 		  cell_t *c = &(b->grid[jj][ii]);
+		  
 		  c->row = appendto(row[getindex(j,jj)],c);
 		  c->column = appendto(col[getindex(i,ii)],c);
 		}
@@ -79,7 +88,7 @@ cell_t ** initgrid(int ygrid, int xgrid)
   for(int j = 0; j < ygrid; ++j) {
 	foocell[j] = (cell_t *) malloc(xgrid * sizeof(cell_t));
 	for(int i = 0; i < xgrid; ++i) {
-	  foocell[j][i].value = FRESH_CELL;
+	  foocell[j][i].value = foo++;
 	  foocell[j][i].row = NULL;
 	  foocell[j][i].column = NULL;
 	}

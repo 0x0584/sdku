@@ -7,19 +7,21 @@
 #include "../include/sdku.h"
 #include "../include/sdku-alloc.h"
 
+
 int MAX_ROWS = 0, MAX_COLUMNS = 0;
 
 int main()
 {
   srand(time(NULL));
-
   initscr();
-
   getmaxyx(stdscr,MAX_ROWS, MAX_COLUMNS);
 
-  if(MAX_ROWS < 28 || MAX_COLUMNS < 75) {
-	endwin();
-	return 1;
+  bool is_not_wide = (MAX_COLUMNS < MIN_SCR_X ||
+					  MAX_ROWS < MIN_SCR_Y);
+
+  if(is_not_wide) {
+  	endwin();
+  	return 1;
   }
   
   sdku_t *s = gensdku(Y_DIM, X_DIM);

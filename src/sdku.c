@@ -6,17 +6,17 @@ int printsdku(sdku_t *sdku, int ydim, int xdim)
 {
   if(!sdku) goto FAILURE;
 
-  int y = (MAX_ROWS/2) + 5, x = MAX_COLUMNS - (MAX_COLUMNS/3);
+  /* int y = (MAX_ROWS/2) + 5, x = MAX_COLUMNS - (MAX_COLUMNS/3); */
   
   start_color();
   init_pair(1, COLOR_BLACK, COLOR_YELLOW);
   init_pair(2, COLOR_WHITE, COLOR_RED);
-  attron(COLOR_PAIR(1));
+  /* attron(COLOR_PAIR(1)); */
 
-  mvprintw(y, x, "[SUDOKU GENERATOR]");
-  mvprintw(++y, x + strlen("SUDOKU")-1, "[0x0584]");
+  /* mvprintw(y, x, "[SUDOKU GENERATOR]"); */
+  /* mvprintw(++y, x + strlen("SUDOKU")-1, "[0x0584]"); */
   
-  attroff(COLOR_PAIR(1));
+  /* attroff(COLOR_PAIR(1)); */
   attron(COLOR_PAIR(2));
 
   refresh();
@@ -158,18 +158,16 @@ sdku_t * gensdku(int ydim, int xdim)
 	printw("ccc %d ", c->cell->value);
 	c = c->next;
   }
-  getch();
-	
+  /*	
   for(int j = 0; j < Y_DIM/3; ++j) {
   	for(int i = 0; i < X_DIM/3; ++i) {
   	  block_t *b = &(sdku->block[j][i]);
+
   	  for(int jj = 0; jj < Y_DIM/3; ++jj) {
   		for(int ii = 0; ii < X_DIM/3; ++ii) {
   		  cell_t *c = &(b->grid[jj][ii]);
-  		  /* i don't know whether the lower if-statment
-  		   * is required or not but i'll keep it for the
-  		   * moment; until i test it */
-  		  if(c->value == FRESH_CELL) {
+
+		  if(c->value == FRESH_CELL) {
   			int index = 0, value;
   			bool isvalid = true;
   		  RETRY:
@@ -190,6 +188,6 @@ sdku_t * gensdku(int ydim, int xdim)
   	  }
   	}
   }
-
+  */
   return sdku;
 }

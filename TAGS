@@ -1,0 +1,213 @@
+
+src/main.c,38
+int MAX_ROWS 11,249
+int main(13,285
+
+src/sdku.c,145
+int printsdku(5,66
+#define shuffle(50,1196
+void shuffvalues(51,1259
+bool isinlist(81,1904
+bool isinblock(96,2233
+sdku_t * gensdku(105,2428
+
+src/sdku-alloc.c,150
+sdku_t * initsdku(4,65
+int foo;72,2315
+cell_t ** initgrid(73,2324
+block_t ** initblock(91,2707
+node_t * appendto(107,3079
+int freesdku(133,3531
+
+include/types.h,315
+#define _TYPES_H2,17
+typedef enum _BOOL_TYPE 5,55
+  false 6,81
+  false = (1==0), true 6,81
+} bool;7,113
+typedef struct _SUDOKU_CELL_STRUCT cell_t;10,129
+typedef struct  _SUDOKU_BLOCK_STRUCT block_t;11,172
+typedef struct  _SUDOKU_PUZZLE_STRUCT sdku_t;12,218
+typedef struct _LINKED_LIST_STRUCT node_t;13,264
+
+include/sdku-alloc.h,26
+#define SDKU_ALLOC_H2,22
+
+include/sdku.h,441
+#define _SDKU_H2,16
+#define Y_DIM 4,33
+#define X_DIM 5,49
+#define FRESH_CELL 6,69
+struct _SUDOKU_PUZZLE_STRUCT 18,253
+  struct _SUDOKU_BLOCK_STRUCT 20,332
+	struct _SUDOKU_CELL_STRUCT 22,401
+	  struct _LINKED_LIST_STRUCT 24,479
+		cell_t *cell;cell25,511
+		node_t *next;next26,562
+	  } *row,row27,610
+	  } *row, *column;column27,610
+	  int value;28,631
+	} **grid;grid29,672
+  } **block;block30,714
+#define putsdku(37,980
+
+src/main.c,62
+int MAX_ROWS 11,249
+int MAX_COLUMNS 12,267
+int main(14,289
+
+src/sdku.c,145
+int printsdku(5,66
+#define shuffle(50,1196
+void shuffvalues(51,1259
+bool isinlist(81,1904
+bool isinblock(96,2233
+sdku_t * gensdku(105,2428
+
+src/sdku-alloc.c,150
+sdku_t * initsdku(4,65
+int foo;72,2315
+cell_t ** initgrid(73,2324
+block_t ** initblock(91,2707
+node_t * appendto(107,3079
+int freesdku(133,3531
+
+include/types.h,315
+#define _TYPES_H2,17
+typedef enum _BOOL_TYPE 5,55
+  false 6,81
+  false = (1==0), true 6,81
+} bool;7,113
+typedef struct _SUDOKU_CELL_STRUCT cell_t;10,129
+typedef struct  _SUDOKU_BLOCK_STRUCT block_t;11,172
+typedef struct  _SUDOKU_PUZZLE_STRUCT sdku_t;12,218
+typedef struct _LINKED_LIST_STRUCT node_t;13,264
+
+include/sdku-alloc.h,26
+#define SDKU_ALLOC_H2,22
+
+include/sdku.h,441
+#define _SDKU_H2,16
+#define Y_DIM 4,33
+#define X_DIM 5,49
+#define FRESH_CELL 6,69
+struct _SUDOKU_PUZZLE_STRUCT 18,253
+  struct _SUDOKU_BLOCK_STRUCT 20,332
+	struct _SUDOKU_CELL_STRUCT 22,401
+	  struct _LINKED_LIST_STRUCT 24,479
+		cell_t *cell;cell25,511
+		node_t *next;next26,562
+	  } *row,row27,610
+	  } *row, *column;column27,610
+	  int value;28,631
+	} **grid;grid29,672
+  } **block;block30,714
+#define putsdku(37,980
+
+src/main.c,62
+int MAX_ROWS 11,249
+int MAX_COLUMNS 12,267
+int main(14,289
+
+src/sdku.c,145
+int printsdku(5,66
+#define shuffle(50,1196
+void shuffvalues(51,1259
+bool isinlist(81,1904
+bool isinblock(96,2233
+sdku_t * gensdku(105,2428
+
+src/sdku-alloc.c,150
+sdku_t * initsdku(4,65
+int foo;72,2315
+cell_t ** initgrid(73,2324
+block_t ** initblock(91,2707
+node_t * appendto(107,3079
+int freesdku(133,3531
+
+include/types.h,315
+#define _TYPES_H2,17
+typedef enum _BOOL_TYPE 5,55
+  false 6,81
+  false = (1==0), true 6,81
+} bool;7,113
+typedef struct _SUDOKU_CELL_STRUCT cell_t;10,129
+typedef struct  _SUDOKU_BLOCK_STRUCT block_t;11,172
+typedef struct  _SUDOKU_PUZZLE_STRUCT sdku_t;12,218
+typedef struct _LINKED_LIST_STRUCT node_t;13,264
+
+include/sdku-alloc.h,26
+#define SDKU_ALLOC_H2,22
+
+include/sdku.h,441
+#define _SDKU_H2,16
+#define Y_DIM 4,33
+#define X_DIM 5,49
+#define FRESH_CELL 6,69
+struct _SUDOKU_PUZZLE_STRUCT 18,253
+  struct _SUDOKU_BLOCK_STRUCT 20,332
+	struct _SUDOKU_CELL_STRUCT 22,401
+	  struct _LINKED_LIST_STRUCT 24,479
+		cell_t *cell;cell25,511
+		node_t *next;next26,562
+	  } *row,row27,610
+	  } *row, *column;column27,610
+	  int value;28,631
+	} **grid;grid29,672
+  } **block;block30,714
+#define putsdku(37,980
+
+src/main.c,62
+int MAX_ROWS 11,249
+int MAX_COLUMNS 12,267
+int main(14,289
+
+src/sdku.c,145
+int printsdku(5,66
+#define shuffle(50,1196
+void shuffvalues(51,1259
+bool isinlist(81,1904
+bool isinblock(96,2233
+sdku_t * gensdku(105,2428
+
+src/sdku-alloc.c,150
+sdku_t * initsdku(4,65
+int foo;75,2412
+cell_t ** initgrid(76,2421
+block_t ** initblock(94,2804
+node_t * appendto(110,3176
+int freesdku(136,3718
+
+include/types.h,315
+#define _TYPES_H2,17
+typedef enum _BOOL_TYPE 5,55
+  false 6,81
+  false = (1==0), true 6,81
+} bool;7,113
+typedef struct _SUDOKU_CELL_STRUCT cell_t;10,129
+typedef struct  _SUDOKU_BLOCK_STRUCT block_t;11,172
+typedef struct  _SUDOKU_PUZZLE_STRUCT sdku_t;12,218
+typedef struct _LINKED_LIST_STRUCT node_t;13,264
+
+include/sdku-alloc.h,26
+#define SDKU_ALLOC_H2,22
+
+include/sdku.h,491
+#define _SDKU_H2,16
+#define Y_DIM 4,33
+#define X_DIM 5,49
+#define MIN_SCR_Y 7,70
+#define MIN_SCR_X 8,91
+#define FRESH_CELL 9,112
+struct _SUDOKU_PUZZLE_STRUCT 21,296
+  struct _SUDOKU_BLOCK_STRUCT 23,375
+	struct _SUDOKU_CELL_STRUCT 25,444
+	  struct _LINKED_LIST_STRUCT 27,522
+		cell_t *cell;cell28,554
+		node_t *next;next29,605
+	  } *row,row30,653
+	  } *row, *column;column30,653
+	  int value;31,674
+	} **grid;grid32,715
+  } **block;block33,757
+#define putsdku(40,1023
