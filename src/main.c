@@ -1,12 +1,18 @@
-/*  AUTHOR: Anas Rchid <rchid.anas@gmail.com>
- *   ABOUT: this is a program that generates a standard
- *          9x9 Sudoku puzzle 
- * CREATED: 06/18/2017
+/*           _____           _       _                  
+ *    _     / ____|         | |     | |             _   
+ *  _| |_  | (___  _   _  __| | ___ | | ___   _   _| |_ 
+ * |_   _|  \___ \| | | |/ _` |/ _ \| |/ / | | | |_   _|
+ *   |_|    ____) | |_| | (_| | (_) |   <| |_| |   |_|  
+ *         |_____/ \__,_|\__,_|\___/|_|\_\\__,_|        
+ *                                                      
+ *	 AUTHOR: Anas Rchid <rchid.anas@gmail.com>
+ *    ABOUT: this is a program that generates a standard
+ *           9x9 Sudoku puzzle. (maybe a game later) 
+ *  CREATED: 06/18/2017
  */
 
 #include "../include/sdku.h"
 #include "../include/sdku-alloc.h"
-
 
 int MAX_ROWS = 0, MAX_COLUMNS = 0;
 
@@ -26,7 +32,7 @@ int main()
   
   sdku_t *s = gensdku(Y_DIM, X_DIM);
 
-  putsdku(s);
+   putsdku(s);
 
   refresh();
   getch();

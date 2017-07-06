@@ -6,7 +6,7 @@
 
 #define FRESH_CELL (-1)
 
-#define MIN_SCR_Y 27
+#define MIN_SCR_Y 24
 #define MIN_SCR_X 56
 
 #include "types.h"

@@ -152,12 +152,6 @@ sdku_t * gensdku(int ydim, int xdim)
 	7, 8, 9
   };
 
-  node_t *c = sdku->block[0][0].grid[0][0].row;
-
-  while(c->next) {
-	printw("ccc %d ", c->cell->value);
-	c = c->next;
-  }
   /*	
   for(int j = 0; j < Y_DIM/3; ++j) {
   	for(int i = 0; i < X_DIM/3; ++i) {
