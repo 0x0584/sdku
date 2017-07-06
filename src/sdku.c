@@ -151,8 +151,7 @@ sdku_t * gensdku(int ydim, int xdim)
 	4, 5, 6,
 	7, 8, 9
   };
-
-  /*	
+  	
   for(int j = 0; j < Y_DIM/3; ++j) {
   	for(int i = 0; i < X_DIM/3; ++i) {
   	  block_t *b = &(sdku->block[j][i]);
@@ -163,16 +162,16 @@ sdku_t * gensdku(int ydim, int xdim)
 
 		  if(c->value == FRESH_CELL) {
   			int index = 0, value;
-  			bool isvalid = true;
   		  RETRY:
   			value = values[index];
 
-  			isvalid &= !(isinblock(b, value));
-  			isvalid &= !(isinlist(c->row, value));
-  			isvalid &= !(isinlist(c->column, value));
-			
-  			if(isvalid) c->value = value, shuffle(values);
-  			else if(index < 9) { ++index; goto RETRY; }
+  			if(!(isinlist(c->column, value)) &&
+			   !(isinlist(c->row, value))    &&
+			   !(isinblock(b, value))) {
+			  c->value = value, shuffle(values);
+			}
+  			else if(index < 9) {
+			  ++index; goto RETRY; }
   			else {
   			  printw("FUCK YOU! %d", index);
   			  getch();
@@ -182,6 +181,6 @@ sdku_t * gensdku(int ydim, int xdim)
   	  }
   	}
   }
-  */
+
   return sdku;
 }

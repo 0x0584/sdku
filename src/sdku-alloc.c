@@ -79,7 +79,7 @@ cell_t ** initgrid(int ygrid, int xgrid)
   for(int j = 0; j < ygrid; ++j) {
 	cell[j] = malloc(xgrid * sizeof **cell);
 	for(int i = 0; i < xgrid; ++i) {
-	  cell[j][i].value = foo++;
+	  cell[j][i].value = FRESH_CELL;
 	  cell[j][i].row = NULL;
 	  cell[j][i].column = NULL;
 	}
