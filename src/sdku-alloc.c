@@ -4,26 +4,24 @@
 node_t * appendto(node_t *head, cell_t *cell)
 {
   if(!(head->cell)) {
-	head->cell = cell;
-	head->next = NULL;
-	
+	head->cell = cell; head->next = NULL;	
 	goto RET;
   }
 
-  node_t *tmp = head,
-	*foo = malloc(sizeof *foo);
+  node_t *tmp = head, *foo = malloc(sizeof *foo);
 
-  foo->cell = cell;
-  foo->next = NULL;
+  foo->cell = cell; foo->next = NULL;
   
-  while(tmp->next)
-	tmp = tmp->next;
+  while(tmp->next) tmp = tmp->next;
+
   tmp->next = foo;
   
  RET:  return head;
 }
 
 int getindex(int b_index, int g_index) {
+  /* the index of the block move 
+   * the index of the cell by 3 */
   int index = 3*b_index + g_index;
   return index;
 }
@@ -49,22 +47,20 @@ sdku_t * initsdku(int ydim, int xdim)
 	col[i]->cell = NULL; col[i]->next = NULL;
   }
 
-  for(int j = 0; j < yb; ++j) {
+  for(int j = 0; j < yb; ++j)
   	for(int i = 0; i < xb; ++i) {
 	  block_t *b = &(sdku->block[j][i]);
-  	  /* for each cell in the block */
-  	  for(int jj = 0; jj < yb; ++jj) {
-  		for(int ii = 0; ii < xb; ++ii) {
-  		  int rowindex = getindex(j,jj),
-  			colindex = getindex(i,ii);
-  		  cell_t *c = &(b->grid[jj][ii]);
 
-		  c->row = appendto(row[rowindex], c);
-		  c->column = appendto(col[colindex], c);
+  	  /* for each cell in the block */
+  	  for(int jj = 0; jj < yb; ++jj)
+  		for(int ii = 0; ii < xb; ++ii) {
+  		  cell_t *c = &(b->grid[jj][ii]);
+		  /* append the current cell into the correct roe/column 
+		   * by taking the index via getindex() */
+		  c->row    = appendto(row[getindex(j, jj)], c);
+		  c->column = appendto(col[getindex(i, ii)], c);
 		}
-	  }
 	}
-  }
     
   return sdku;
 }
@@ -79,8 +75,8 @@ cell_t ** initgrid(int ygrid, int xgrid)
   for(int j = 0; j < ygrid; ++j) {
 	cell[j] = malloc(xgrid * sizeof **cell);
 	for(int i = 0; i < xgrid; ++i) {
-	  cell[j][i].value = FRESH_CELL;
-	  cell[j][i].row = NULL;
+	  cell[j][i].value  = FRESH_CELL;
+	  cell[j][i].row    = NULL;
 	  cell[j][i].column = NULL;
 	}
   }

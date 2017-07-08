@@ -1,7 +1,6 @@
 #include "../include/sdku.h"
 #include "../include/sdku-alloc.h"
 
-
 int printsdku(sdku_t *sdku, int ydim, int xdim)
 {
   if(!sdku) goto FAILURE;
@@ -50,32 +49,36 @@ int printsdku(sdku_t *sdku, int ydim, int xdim)
 #define shuffle(val) shuffvalues(val, sizeof(val)/sizeof(int))
 void shuffvalues(int *v, int size)
 {
-  bool used[size];
-  int index0, index1,
-	seed = rand();			/* a trick to update the seed
-							 * within the function */
+ bool used[size];				/* already shuffled items */
+ int index0, index1,
+   seed = rand();			/* a trick to update the seed
+							* within the function */
 
-  for(int i = 0; i < size; ++i) used[i] = false;
+ for(int i = 0; i < size; ++i) used[i] = false;
 
-  if(size%2) srand(++seed), index0 = index1 = rand()%size;
-  else index0 = 0, index1 = (size - 1);
+ /* if the size is odd we keep a random element
+  * in its original position */
+ if(size%2) srand(++seed), index0 = index1 = rand()%size;
+ /* otherwise we we start are first/last positions */
+ else index0 = 0, index1 = (size - 1);
 
-  for(int i = 0; i < 9; ++i) {
-	while(used[index0] || used[index1]) {
-	BEGINNIG:
-	  index0 = rand()%9;
-	  srand(++seed);
-	  index1 = rand()%9;
+ for(int i = 0; i < size; ++i) {
+   /* take two random elements each time */
+   while(used[index0] || used[index1]) {
+   BEGINNIG:
+	 index0 = rand()%9;
+	 srand(++seed);				/* change the seed */
+	 index1 = rand()%9;
 
-	  if(index0 == index1) goto BEGINNIG;
-	  else break;
-	}
+	 if(index0 == index1) goto BEGINNIG;
+	 else break;
+   }
 
-	used[index0] = used[index1] = true; /* check as used */
+   used[index0] = used[index1] = true; /* check as used */
 
-	int tmp;
-	tmp = v[index0]; v[index0] = v[index1]; v[index1] = tmp;
-  }
+   int tmp;						/* swap the two elements*/
+   tmp = v[index0]; v[index0] = v[index1]; v[index1] = tmp;
+ }
 }
 
 bool isinlist(const node_t *head, const int this)
@@ -160,7 +163,7 @@ sdku_t * gensdku(int ydim, int xdim)
   		for(int ii = 0; ii < X_DIM/3; ++ii) {
   		  cell_t *c = &(b->grid[jj][ii]);
 
-		  if(c->value == FRESH_CELL) {
+		  if(c->value == FRESH_CELL) { /* if it's a fresh  cell */
   			int index = 0, value;
   		  RETRY:
   			value = values[index];
@@ -170,8 +173,9 @@ sdku_t * gensdku(int ydim, int xdim)
 			   !(isinblock(b, value))) {
 			  c->value = value, shuffle(values);
 			}
-  			else if(index < 9) {
-			  ++index; goto RETRY; }
+  			else if(index < 9) { /* try another value */
+			  ++index; goto RETRY;
+			}
   			else {
   			  printw("FUCK YOU! %d", index);
   			  getch();
